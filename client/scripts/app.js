@@ -7,9 +7,10 @@ app.send = function(message) {
   // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
     type: 'POST',
-    data: message,
+    data: this.message,
     contentType: 'application/json',
     success: function (data) {
+      
       console.log('chatterbox: Message sent');
     },
     error: function (data) {
@@ -19,14 +20,20 @@ app.send = function(message) {
   });
 };
 
-app.fetch = function() {
+app.fetch = function(url) {
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
+    url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
     type: 'GET',
-    data: message,
+    data: this.message,
     contentType: 'application/json',
     success: function (data) {
       console.log('chatterbox: Message sent');
+      console.log(data);
+      for (var i = 0; i < data.results.length; i++) {
+        app.renderMessage(data.results[i]);
+      }
+
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -48,7 +55,23 @@ app.renderRoom = function(roomName) {
 };
 
 app.handleUsernameClick = function() {
-  $('.username').click(function() {
+  $('.put').click(function() {
     return true;
   });
 };
+
+
+
+$(document).ready(function() {
+  $('.submitForm').submit(function() {
+   // alert($('.input').val());
+    var message = {};
+    message.text = $('.input').val();
+    app.fetch();
+
+  });
+
+  $('a').find('.testing').click(function(){
+    app.fetch();
+  }); 
+});
