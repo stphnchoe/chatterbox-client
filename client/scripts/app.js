@@ -20,7 +20,7 @@ app.send = function(message) {
   });
 };
 
-app.fetch = function(url) {
+app.fetch = function(roomName) {
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
@@ -31,7 +31,10 @@ app.fetch = function(url) {
       console.log('chatterbox: Message sent');
       console.log(data);
       for (var i = 0; i < data.results.length; i++) {
-        app.renderMessage(data.results[i]);
+        if (data.results[i].roomname === roomName) {
+          app.renderMessage(data.results[i]);
+        }
+        //app.renderMessage(data.results[i]);
       }
 
     },
@@ -71,7 +74,19 @@ $(document).ready(function() {
 
   });
 
-  $('a').find('.testing').click(function(){
-    app.fetch();
-  }); 
+  $('a[href$="#testing"]').on('click', function() {
+    app.clearMessages();
+    setTimeout(app.fetch('testing'), 200);
+    
+  });
+
+  $('a[href$="#testroom"]').on('click', function() {
+    app.clearMessages();
+    setTimeout(app.fetch('testRoom', 200));
+  });
+
+  $('a[href$="#lobby"]').on('click', function() {
+    app.clearMessages();
+    setTimeout(app.fetch('lobby'), 200);
+  });
 });
