@@ -7,6 +7,8 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src ="bower_components/backbone/backbone.js"</script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -26,7 +28,27 @@
     <div id="main">
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
+      <ul>
+  <li><a href="#home">Home</a></li>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Rooms</a>
+    <div class="dropdown-content">
+      <a href="#">Market</a>
+      <a href="#">Howard</a>
+      <a href="#">Mission</a>
     </div>
-    <div id="chats"></div>
+  </li>
+</ul>
+      </div>
+      <div>
+        <form action="/action_page.php">
+          Message:<br>
+          <input type="text" class="input" placeholder="say something"><br><br>
+          <input type="submit" id="submitButton" value="Submit">
+        </form>
+      </div>
+    </div>
+    <div id="chats">
+    </div>
   </body>
 </html>
